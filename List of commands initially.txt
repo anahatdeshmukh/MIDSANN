@@ -1,3 +1,125 @@
+```bash id="w7j9fd"
+# ================================
+# CREATE PROJECT FOLDER
+# ================================
+
+mkdir MIDS_ANN_Projects
+cd MIDS_ANN_Projects
+
+
+# ================================
+# CREATE VIRTUAL ENVIRONMENT
+# ================================
+
+python3 -m venv venv
+
+
+# ================================
+# ACTIVATE VIRTUAL ENVIRONMENT
+# ================================
+
+# macOS / Linux
+source venv/bin/activate
+
+# Windows
+# venv\Scripts\activate
+
+
+# ================================
+# UPGRADE PIP
+# ================================
+
+pip install --upgrade pip
+
+
+# ================================
+# INSTALL ALL REQUIRED LIBRARIES
+# ================================
+
+pip install numpy
+
+pip install pandas
+
+pip install matplotlib
+
+pip install scikit-learn
+
+pip install tensorflow
+
+pip install textblob
+
+pip install seaborn
+
+pip install scipy
+
+pip install notebook
+
+pip install jupyter
+
+pip install ipykernel
+
+
+# ================================
+# DOWNLOAD TEXTBLOB DATA
+# ================================
+
+python -m textblob.download_corpora
+
+
+# ================================
+# INSTALL JUPYTER KERNEL
+# ================================
+
+python -m ipykernel install --user --name=venv
+
+
+# ================================
+# START JUPYTER NOTEBOOK
+# ================================
+
+jupyter notebook
+
+
+# ================================
+# OR START JUPYTER LAB
+# ================================
+
+jupyter lab
+
+
+# ================================
+# SAVE ALL DEPENDENCIES
+# ================================
+
+pip freeze > requirements.txt
+
+
+# ================================
+# REINSTALL ALL DEPENDENCIES LATER
+# ================================
+
+pip install -r requirements.txt
+```
+
+### Recommended Python Version
+
+```text id="jlwm2r"
+Python 3.10 or Python 3.11
+```
+
+### If TensorFlow fails on Python 3.13
+
+```bash id="kn6zh0"
+python3.11 -m venv venv
+```
+
+
+
+
+________________________________________________________________
+
+
+
 pip install pandas numpy scikit-learn matplotlib seaborn
 
 Windows
