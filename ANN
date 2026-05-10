@@ -1,0 +1,593 @@
+# ANN 1 — Activation Functions with Graphs
+
+## Aim
+
+To demonstrate different activation functions used in neural networks and plot their graphs.
+
+---
+
+## Procedure
+
+1. Import libraries
+2. Generate input values
+3. Define activation functions
+4. Plot graphs for each function
+
+---
+
+## Line-by-Line Explanation
+
+```python id="mt6rku"
+import numpy as np
+```
+
+- Imports NumPy library.
+- Used for mathematical operations.
+
+---
+
+```python id="2ftxsz"
+import matplotlib.pyplot as plt
+```
+
+- Imports Matplotlib library.
+- Used for plotting graphs.
+
+---
+
+```python id="wos24m"
+x = np.linspace(-10, 10, 100)
+```
+
+- Generates 100 equally spaced values between -10 and 10.
+- Used as input for activation functions.
+
+---
+
+## Sigmoid Function
+
+```python id="u4ldvy"
+def sigmoid(x):
+```
+
+- Defines sigmoid function.
+
+```python id="xjmx3q"
+return 1 / (1 + np.exp(-x))
+```
+
+- Formula of sigmoid function.
+
+genui{"math_block_widget_always_prefetch_v2":{"content":"f(x)=\frac{1}{1+e^{-x}}"}}
+
+- Output range: 0 to 1.
+
+---
+
+## Tanh Function
+
+```python id="3j1jlwm"
+def tanh(x):
+```
+
+- Defines tanh activation function.
+
+```python id="y7f7gt"
+return np.tanh(x)
+```
+
+- Calculates tanh values.
+
+tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}
+
+- Output range: -1 to 1.
+
+---
+
+## ReLU Function
+
+```python id="6x9kzs"
+def relu(x):
+```
+
+- Defines ReLU function.
+
+```python id="tq1bz0"
+return np.maximum(0, x)
+```
+
+- Returns positive values only.
+
+ReLU(x)=\max(0,x)
+
+---
+
+## Plotting Graphs
+
+```python id="5vc7ru"
+plt.figure(figsize=(6,4))
+```
+
+- Creates graph figure.
+
+---
+
+```python id="hrrk7w"
+plt.plot(x, sigmoid(x))
+```
+
+- Plots sigmoid graph.
+
+---
+
+```python id="eh0vng"
+plt.title("Sigmoid Function")
+```
+
+- Sets graph title.
+
+---
+
+```python id="sfr97z"
+plt.xlabel("x")
+plt.ylabel("sigmoid(x)")
+```
+
+- Labels x-axis and y-axis.
+
+---
+
+```python id="n0b5z4"
+plt.grid()
+```
+
+- Displays grid lines.
+
+---
+
+```python id="n8a5m4"
+plt.show()
+```
+
+- Displays graph.
+
+---
+
+## Viva Points
+
+- Activation functions introduce non-linearity.
+- Sigmoid used in binary classification.
+- ReLU is most commonly used in deep learning.
+
+---
+
+# ANN 2 — Back Propagation Network for XOR
+
+## Aim
+
+To implement XOR operation using back propagation neural network.
+
+---
+
+## Procedure
+
+1. Define XOR inputs and outputs
+2. Create neural network
+3. Add hidden and output layers
+4. Train model using back propagation
+5. Predict outputs
+
+---
+
+## Line-by-Line Explanation
+
+```python id="mxgl9x"
+from tensorflow.keras.models import Sequential
+```
+
+- Imports Sequential model.
+- Layers are added sequentially.
+
+---
+
+```python id="ly5mzz"
+from tensorflow.keras.layers import Dense
+```
+
+- Imports Dense layer.
+- Fully connected neural network layer.
+
+---
+
+```python id="2dlfte"
+X = np.array([
+```
+
+- Input combinations for XOR gate.
+
+---
+
+```python id="7vlb4r"
+y = np.array([
+```
+
+- Expected XOR outputs.
+
+---
+
+```python id="bvgknq"
+model = Sequential()
+```
+
+- Creates neural network model.
+
+---
+
+```python id="1y5gw0"
+model.add(Dense(4, input_dim=2, activation='relu'))
+```
+
+- Adds hidden layer with:
+  - 4 neurons
+  - 2 input values
+  - ReLU activation
+
+---
+
+```python id="k11dyh"
+model.add(Dense(1, activation='sigmoid'))
+```
+
+- Output layer with sigmoid activation.
+
+---
+
+```python id="2rbnnc"
+model.compile(loss='binary_crossentropy',
+              optimizer='adam',
+              metrics=['accuracy'])
+```
+
+- Configures training process.
+- Binary crossentropy used for binary outputs.
+
+---
+
+```python id="jlwm2o"
+model.fit(X, y, epochs=500, verbose=0)
+```
+
+- Trains network for 500 iterations.
+
+---
+
+```python id="g7ykr6"
+predictions = model.predict(X)
+```
+
+- Predicts XOR outputs.
+
+---
+
+```python id="sb5y0j"
+print(np.round(predictions))
+```
+
+- Rounds values to 0 or 1.
+
+---
+
+## Viva Points
+
+- XOR is non-linear problem.
+- Back propagation updates weights using error.
+- Epoch means one complete training cycle.
+
+---
+
+# ANN 3 — Back Propagation Feed Forward Network
+
+## Aim
+
+To implement feed forward neural network using back propagation.
+
+---
+
+## Procedure
+
+1. Create input/output data
+2. Create neural network
+3. Train using back propagation
+4. Predict outputs
+
+---
+
+## Line-by-Line Explanation
+
+```python id="wyf6g5"
+model = Sequential()
+```
+
+- Creates feed forward neural network.
+
+---
+
+```python id="o5yl8u"
+model.add(Dense(4, input_dim=2, activation='relu'))
+```
+
+- Hidden layer with 4 neurons.
+
+---
+
+```python id="ikzq1d"
+model.add(Dense(1, activation='sigmoid'))
+```
+
+- Output layer with sigmoid activation.
+
+---
+
+```python id="ehg3j0"
+model.compile(optimizer='adam',
+              loss='binary_crossentropy',
+              metrics=['accuracy'])
+```
+
+- Compiles neural network.
+
+---
+
+```python id="b2g9ic"
+model.fit(X, y, epochs=500, verbose=0)
+```
+
+- Trains network using back propagation.
+
+---
+
+```python id="4fwqlh"
+output = model.predict(X)
+```
+
+- Predicts outputs.
+
+---
+
+## Viva Points
+
+- Feed forward means data moves one direction.
+- Back propagation minimizes error.
+- Neural network learns patterns from data.
+
+---
+
+# ANN 4 — ART (Adaptive Resonance Theory)
+
+## Aim
+
+To demonstrate ART clustering algorithm.
+
+---
+
+## Procedure
+
+1. Define patterns
+2. Compare similarity
+3. Form clusters
+4. Display final clusters
+
+---
+
+## Line-by-Line Explanation
+
+```python id="9o6ck2"
+patterns = np.array([
+```
+
+- Stores input binary patterns.
+
+---
+
+```python id="pykmdx"
+clusters = []
+```
+
+- Empty list for clusters.
+
+---
+
+```python id="xdvavl"
+threshold = 0.5
+```
+
+- Similarity threshold value.
+
+---
+
+```python id="0kqtwj"
+for p in patterns:
+```
+
+- Loops through patterns.
+
+---
+
+```python id="7y7x0x"
+assigned = False
+```
+
+- Initially pattern is not assigned.
+
+---
+
+```python id="4uh8sz"
+for i, c in enumerate(clusters):
+```
+
+- Loops through existing clusters.
+
+---
+
+```python id="mqn03u"
+similarity = np.sum(p == c) / len(p)
+```
+
+- Calculates similarity between patterns.
+
+---
+
+```python id="rfrd9y"
+if similarity >= threshold:
+```
+
+- Checks if similarity is sufficient.
+
+---
+
+```python id="jlwmht"
+clusters.append(p)
+```
+
+- Creates new cluster if no match found.
+
+---
+
+## Viva Points
+
+- ART is unsupervised learning algorithm.
+- Used for pattern recognition.
+- Similarity threshold controls clustering.
+
+---
+
+# ANN 5 — Perceptron Learning Law with Decision Region
+
+## Aim
+
+To demonstrate perceptron learning and plot decision boundary.
+
+---
+
+## Procedure
+
+1. Define input data
+2. Train perceptron model
+3. Plot points
+4. Draw decision boundary
+
+---
+
+## Line-by-Line Explanation
+
+```python id="q5x6a0"
+from sklearn.linear_model import Perceptron
+```
+
+- Imports Perceptron model.
+
+---
+
+```python id="pmvc2y"
+X = np.array([
+```
+
+- Input training data.
+
+---
+
+```python id="8h1ah7"
+y = np.array([0, 0, 0, 0, 1, 1, 1, 1])
+```
+
+- Output labels.
+
+---
+
+```python id="igqk86"
+model = Perceptron()
+```
+
+- Creates perceptron classifier.
+
+---
+
+```python id="46wyqy"
+model.fit(X, y)
+```
+
+- Trains perceptron model.
+
+---
+
+```python id="3lvs4q"
+plt.scatter(X[i][0], X[i][1], marker='o')
+```
+
+- Plots class 0 points.
+
+---
+
+```python id="smlr1t"
+plt.scatter(X[i][0], X[i][1], marker='x')
+```
+
+- Plots class 1 points.
+
+---
+
+```python id="ejmlmt"
+w = model.coef_[0]
+```
+
+- Retrieves weight values.
+
+---
+
+```python id="d0v4ma"
+b = model.intercept_[0]
+```
+
+- Retrieves bias value.
+
+---
+
+```python id="i93bsv"
+x_points = np.linspace(0, 10, 100)
+```
+
+- Generates x-axis values.
+
+---
+
+```python id="bjv7yi"
+y_points = -(w[0] * x_points + b) / w[1]
+```
+
+- Calculates decision boundary equation.
+
+y=\frac{-(w_1x+b)}{w_2}
+
+---
+
+```python id="wfrz5o"
+plt.plot(x_points, y_points)
+```
+
+- Draws decision boundary line.
+
+---
+
+```python id="c6a2v2"
+plt.show()
+```
+
+- Displays graph.
+
+---
+
+## Viva Points
+
+- Perceptron is binary classifier.
+- Decision boundary separates classes.
+- Weights and bias define separating line.
