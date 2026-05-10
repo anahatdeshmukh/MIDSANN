@@ -1,0 +1,617 @@
+# MIDS 1 — Titanic Dataset Preprocessing
+
+## Aim
+
+To preprocess the Titanic dataset by handling missing values, encoding categorical data, and splitting data for machine learning.
+
+---
+
+## Flow / Procedure
+
+1. Import libraries
+2. Load Titanic dataset
+3. Check missing values
+4. Fill missing values
+5. Remove unnecessary columns
+6. Convert categorical data to numeric
+7. Split data into features and target
+8. Divide into training and testing data
+
+---
+
+## Line-by-Line Explanation
+
+```python
+import pandas as pd
+```
+
+* Imports pandas library.
+* Used for handling datasets in table format.
+
+```python
+from sklearn.model_selection import train_test_split
+```
+
+* Imports function to split dataset into training and testing sets.
+
+```python
+from sklearn.preprocessing import LabelEncoder
+```
+
+* Used to convert text labels into numbers.
+
+---
+
+```python
+df = pd.read_csv("Titanic.csv")
+```
+
+* Reads Titanic dataset from CSV file.
+* Stores dataset in variable `df`.
+
+---
+
+```python
+print(df.head())
+```
+
+* Displays first 5 rows of dataset.
+* Used to inspect dataset.
+
+---
+
+```python
+print(df.isnull().sum())
+```
+
+* Checks missing values in each column.
+
+---
+
+```python
+df['Age'] = df['Age'].fillna(df['Age'].mean())
+```
+
+* Missing values in Age are replaced with average age.
+
+---
+
+```python
+df['Embarked'] = df['Embarked'].fillna(df['Embarked'].mode()[0])
+```
+
+* Missing Embarked values replaced with most repeated value.
+
+---
+
+```python
+df.drop('Cabin', axis=1, inplace=True)
+```
+
+* Removes Cabin column because it has many missing values.
+
+---
+
+```python
+le = LabelEncoder()
+```
+
+* Creates LabelEncoder object.
+
+---
+
+```python
+df['Sex'] = le.fit_transform(df['Sex'])
+```
+
+* Converts Male/Female into numeric values.
+
+---
+
+```python
+df['Embarked'] = le.fit_transform(df['Embarked'])
+```
+
+* Converts port names into numbers.
+
+---
+
+```python
+X = df.drop('Survived', axis=1)
+```
+
+* Stores input features in X.
+
+---
+
+```python
+y = df['Survived']
+```
+
+* Stores target column in y.
+
+---
+
+```python
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+```
+
+* Splits data into training and testing.
+* 80% training, 20% testing.
+
+---
+
+```python
+print("Preprocessing Completed")
+```
+
+* Displays completion message.
+
+---
+
+## Viva Points
+
+* Preprocessing improves data quality.
+* Label Encoding converts text to numbers.
+* Missing values are handled before training.
+
+---
+
+# MIDS 2 — Sentiment Analysis using KNN
+
+## Aim
+
+To classify Twitter text sentiments using KNN algorithm.
+
+---
+
+## Procedure
+
+1. Load dataset
+2. Remove missing values
+3. Convert text to numeric form
+4. Train KNN model
+5. Predict sentiment
+6. Calculate accuracy
+
+---
+
+## Line-by-Line Explanation
+
+```python
+from sklearn.feature_extraction.text import CountVectorizer
+```
+
+* Converts text into numeric vectors.
+
+---
+
+```python
+from sklearn.neighbors import KNeighborsClassifier
+```
+
+* Imports KNN classifier.
+
+---
+
+```python
+from sklearn.metrics import accuracy_score
+```
+
+* Used to calculate model accuracy.
+
+---
+
+```python
+df = pd.read_csv("Twitter_Data.csv")
+```
+
+* Loads Twitter dataset.
+
+---
+
+```python
+df.dropna(inplace=True)
+```
+
+* Removes rows with missing values.
+
+---
+
+```python
+X = df['clean_text']
+```
+
+* Input text data.
+
+---
+
+```python
+y = df['category']
+```
+
+* Output sentiment labels.
+
+---
+
+```python
+cv = CountVectorizer()
+```
+
+* Creates object to convert text into vectors.
+
+---
+
+```python
+X = cv.fit_transform(X)
+```
+
+* Converts words into numeric matrix.
+
+---
+
+```python
+model = KNeighborsClassifier(n_neighbors=3)
+```
+
+* Creates KNN model with 3 nearest neighbors.
+
+---
+
+```python
+model.fit(X_train, y_train)
+```
+
+* Trains model using training data.
+
+---
+
+```python
+y_pred = model.predict(X_test)
+```
+
+* Predicts sentiment for test data.
+
+---
+
+```python
+print("Accuracy:", accuracy_score(y_test, y_pred))
+```
+
+* Displays prediction accuracy.
+
+---
+
+## Viva Points
+
+* KNN is supervised learning algorithm.
+* CountVectorizer converts text to numbers.
+* Accuracy measures model performance.
+
+---
+
+# MIDS 3 — Polarity Based Sentiment Analysis
+
+## Aim
+
+To classify document as positive or negative using polarity score.
+
+---
+
+## Procedure
+
+1. Take text input
+2. Analyze sentiment polarity
+3. Check polarity value
+4. Display sentiment type
+
+---
+
+## Line-by-Line Explanation
+
+```python
+from textblob import TextBlob
+```
+
+* Imports TextBlob library for NLP.
+
+---
+
+```python
+text = input("Enter a sentence: ")
+```
+
+* Takes sentence from user.
+
+---
+
+```python
+analysis = TextBlob(text)
+```
+
+* Creates TextBlob object for sentiment analysis.
+
+---
+
+```python
+polarity = analysis.sentiment.polarity
+```
+
+* Finds polarity score.
+* Range:
+
+  * Positive → >0
+  * Negative → <0
+  * Neutral → 0
+
+---
+
+```python
+if polarity > 0:
+```
+
+* Checks positive sentiment.
+
+---
+
+```python
+elif polarity < 0:
+```
+
+* Checks negative sentiment.
+
+---
+
+```python
+else:
+```
+
+* Checks neutral sentiment.
+
+---
+
+```python
+print("Polarity Score:", polarity)
+```
+
+* Displays polarity value.
+
+---
+
+## Viva Points
+
+* Polarity score lies between -1 and +1.
+* TextBlob is NLP library.
+* Positive polarity means positive sentiment.
+
+---
+
+# MIDS 4 — Abalone Dataset using Linear Regression
+
+## Aim
+
+To predict number of rings using Linear Regression.
+
+---
+
+## Procedure
+
+1. Load dataset
+2. Encode categorical values
+3. Split features and target
+4. Train Linear Regression model
+5. Predict output
+6. Calculate error
+
+---
+
+## Line-by-Line Explanation
+
+```python
+from sklearn.linear_model import LinearRegression
+```
+
+* Imports Linear Regression model.
+
+---
+
+```python
+from sklearn.metrics import mean_squared_error
+```
+
+* Used to calculate prediction error.
+
+---
+
+```python
+df = pd.read_csv("abalone.csv")
+```
+
+* Loads Abalone dataset.
+
+---
+
+```python
+df['Sex'] = le.fit_transform(df['Sex'])
+```
+
+* Converts categorical values into numbers.
+
+---
+
+```python
+X = df.drop('Rings', axis=1)
+```
+
+* Stores input features.
+
+---
+
+```python
+y = df['Rings']
+```
+
+* Stores target output.
+
+---
+
+```python
+model = LinearRegression()
+```
+
+* Creates regression model.
+
+---
+
+```python
+model.fit(X_train, y_train)
+```
+
+* Trains regression model.
+
+---
+
+```python
+y_pred = model.predict(X_test)
+```
+
+* Predicts ring values.
+
+---
+
+```python
+mse = mean_squared_error(y_test, y_pred)
+```
+
+* Calculates prediction error.
+
+---
+
+## Viva Points
+
+* Linear Regression predicts continuous values.
+* Lower MSE means better model.
+* Rings indicate age of abalone.
+
+---
+
+# MIDS 5 — K-Means Clustering
+
+## Aim
+
+To perform K-Means clustering on given points.
+
+---
+
+## Procedure
+
+1. Define points
+2. Select initial centroids
+3. Calculate distance
+4. Assign clusters
+5. Update centroids
+
+---
+
+## Line-by-Line Explanation
+
+```python
+import numpy as np
+```
+
+* Imports NumPy for numerical calculations.
+
+---
+
+```python
+points = {
+```
+
+* Stores all given points.
+
+---
+
+```python
+m1 = np.array(points["P1"])
+m2 = np.array(points["P8"])
+```
+
+* Initial centroids for clusters.
+
+---
+
+```python
+C1 = []
+C2 = []
+```
+
+* Empty lists for clusters.
+
+---
+
+```python
+def distance(a, b):
+```
+
+* Function to calculate Euclidean distance.
+
+---
+
+```python
+return np.sqrt(np.sum((a - b) ** 2))
+```
+
+* Formula for Euclidean distance.
+
+d=\sqrt{\sum (a-b)^2}
+
+---
+
+```python
+for name, point in points.items():
+```
+
+* Loops through all points.
+
+---
+
+```python
+d1 = distance(point, m1)
+d2 = distance(point, m2)
+```
+
+* Distance from both centroids.
+
+---
+
+```python
+if d1 < d2:
+```
+
+* Assigns point to nearest cluster.
+
+---
+
+```python
+new_m1 = np.mean(C1, axis=0)
+```
+
+* Calculates updated centroid of Cluster 1.
+
+---
+
+```python
+new_m2 = np.mean(C2, axis=0)
+```
+
+* Calculates updated centroid of Cluster 2.
+
+---
+
+## Viva Points
+
+* K-Means is unsupervised learning.
+* Centroid means center of cluster.
+* Euclidean distance measures closeness.
